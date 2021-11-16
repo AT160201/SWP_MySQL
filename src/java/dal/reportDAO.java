@@ -5,6 +5,7 @@
  */
 package dal;
 
+import com.mysql.jdbc.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,58 +18,64 @@ import model.Room;
  *
  * @author MY LAPTOP
  */
-public class reportDAO extends DBContext{
+public class reportDAO extends DataConnection {
+
+    Connection connection = getConnection();
+
     public List<Report> getReport() {
         List<Report> list = new ArrayList<>();
-        String sql =" select * from Report\n" +
-                    "  Order by ReportID DESC";
-            try {
-                PreparedStatement st = connection.prepareStatement(sql);
-                ResultSet rs = st.executeQuery();
-                while(rs.next()){
-                    list.add(new Report(rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getInt(4),
-                            rs.getString(5)));
-                }
-            } catch (SQLException e) {
-                System.out.println(e);
+        String sql = " select * from Report\n"
+                + "  Order by ReportID DESC";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Report(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5)));
             }
-        return list;
+        } catch (SQLException e) {
+            System.out.println(e);
         }
-    public Report getReportByID(int id){
-        String sql="select * from Report \n" +
-                   "  where ReportID=?";
-        try{
-            PreparedStatement st= connection.prepareStatement(sql);
+        return list;
+    }
+
+    public Report getReportByID(int id) {
+        String sql = "select * from Report \n"
+                + "  where ReportID=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
-            ResultSet rs= st.executeQuery();
-            while(rs.next()){
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
                 return new Report(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
                         rs.getString(5));
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return null;
     }
-    public int response(String response,int reportId){
-        String sql="UPDATE Report set Response=? \n" +
-                   "  where ReportID=?";
-        try{
-            PreparedStatement st= connection.prepareStatement(sql);
+
+    public int response(String response, int reportId) {
+        String sql = "UPDATE Report set Response=? \n"
+                + "  where ReportID=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, response);
             st.setInt(2, reportId);
             return st.executeUpdate();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
-        return 0;    
+        return 0;
     }
+
     public static void main(String[] args) {
         reportDAO dao = new reportDAO();
 //        List<Report> list = dao.getReport();

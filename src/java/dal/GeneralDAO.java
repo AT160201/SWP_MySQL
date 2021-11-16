@@ -5,6 +5,8 @@
  */
 package dal;
 
+import com.mysql.jdbc.Connection;
+import static dal.DataConnection.getConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,13 +20,15 @@ import model.Type;
  *
  * @author ADMIN
  */
-public class GeneralDAO extends DBContext {
+public class GeneralDAO extends DataConnection {
+
+    private Connection connection = getConnection();
 
     public ArrayList<Place> getTop6Place() {
         ArrayList<Place> list = new ArrayList<>();
-        String sql = "select top 6 p.PlaceID, p.Place, p.img, COUNT(RoomID) as count from Place as p inner join Room as r on p.PlaceID= r.PlaceID\n"
-                + "group by p.PlaceID, p.Place, p.img\n"
-                + "order by count desc";
+        String sql = "select p.PlaceID, p.Place, p.img, COUNT(RoomID) as count from Place as p inner join Room \n"
+                + "as r on p.PlaceID= r.PlaceID group by p.PlaceID, p.Place, p.img order by count desc\n"
+                + "limit 6";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -40,9 +44,9 @@ public class GeneralDAO extends DBContext {
 
     public ArrayList<Type> getTop6Type() {
         ArrayList<Type> list = new ArrayList<>();
-        String sql = "select top 6 p.TypeID, p.Type, p.img, COUNT(RoomID) as count from Type as p inner join Room as r on p.TypeID= r.TypeID\n"
-                + "group by p.TypeID, p.Type, p.img\n"
-                + "order by count desc";
+        String sql = "select p.TypeID, p.Type, p.img, COUNT(RoomID) as count from Type as p inner join Room "
+                + "as r on p.TypeID= r.TypeID group by p.TypeID, p.Type, p.img order by count desc "
+                + "limit 6";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -88,7 +92,7 @@ public class GeneralDAO extends DBContext {
 
     public ArrayList<Room> get6Room() {
         ArrayList<Room> list = new ArrayList<>();
-        String sql = "select top 6 * from Room order by Rating";
+        String sql = "select * from Room order by Rating limit 6";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
