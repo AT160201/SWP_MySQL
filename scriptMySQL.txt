@@ -1,0 +1,210 @@
+
+create database OnlineBooking;
+USE OnlineBooking;
+ 
+/* SQLINES DEMO *** le [dbo].[Account]    Script Date: 11/14/2021 7:05:03 PM ******/
+/* SET ANSI_NULLS ON */
+ 
+/* SET QUOTED_IDENTIFIER ON */
+ 
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE Account(
+	userId int AUTO_INCREMENT NOT NULL,
+	UserName Longtext NOT NULL,
+	PassWord Longtext NOT NULL,
+	Email Longtext NULL,
+	FName Longtext NULL,
+	LName Longtext NULL,
+	Phone Longtext NULL,
+	isAdmin Tinyint NULL,
+	isBooker Tinyint NULL,
+	isOwner Tinyint NULL,
+	Picture Longtext NULL,
+	Block Tinyint NULL,
+PRIMARY KEY 
+(
+	userId ASC
+) 
+);
+/* SQLINES DEMO *** le [dbo].[Booking]    Script Date: 11/14/2021 7:05:03 PM ******/
+/* SET ANSI_NULLS ON */
+ 
+/* SET QUOTED_IDENTIFIER ON */
+ 
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE Booking(
+	BookingID int AUTO_INCREMENT NOT NULL,
+	IDCustomer int NULL,
+	IDOwner int NULL,
+	CheckIn date NULL,
+	CheckOut date NULL,
+	TotalPrice Double NULL,
+	RoomID int NOT NULL,
+	Status nvarchar(50) NULL,
+ CONSTRAINT PK_Booking PRIMARY KEY 
+(
+	BookingID ASC
+) 
+);
+/* SQLINES DEMO *** le [dbo].[Comment]    Script Date: 11/14/2021 7:05:03 PM ******/
+/* SET ANSI_NULLS ON */
+ 
+/* SET QUOTED_IDENTIFIER ON */
+ 
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE Comment(
+	commentID int AUTO_INCREMENT NOT NULL,
+	roomID int NOT NULL,
+	userId int NOT NULL,
+	content Longtext NULL,
+	rating int NULL,
+	status Tinyint NULL,
+PRIMARY KEY 
+(
+	commentID ASC
+) 
+);
+/* SQLINES DEMO *** le [dbo].[Mail]    Script Date: 11/14/2021 7:05:03 PM ******/
+/* SET ANSI_NULLS ON */
+ 
+/* SET QUOTED_IDENTIFIER ON */
+ 
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE Mail(
+	id int AUTO_INCREMENT NOT NULL,
+	name nvarchar(50) NOT NULL,
+	Efrom nvarchar(50) NOT NULL,
+	password nvarchar(50) NOT NULL,
+	subject nvarchar(50) NOT NULL,
+	content Longtext NOT NULL,
+ CONSTRAINT PK_Mail PRIMARY KEY 
+(
+	id ASC
+) 
+);
+/* SQLINES DEMO *** le [dbo].[Place]    Script Date: 11/14/2021 7:05:03 PM ******/
+/* SET ANSI_NULLS ON */
+ 
+/* SET QUOTED_IDENTIFIER ON */
+ 
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE Place(
+	PlaceID int AUTO_INCREMENT NOT NULL,
+	Place Longtext NULL,
+	img nvarchar(50) NULL,
+ CONSTRAINT PK_Place PRIMARY KEY 
+(
+	PlaceID ASC
+) 
+);
+/* SQLINES DEMO *** le [dbo].[Report]    Script Date: 11/14/2021 7:05:03 PM ******/
+/* SET ANSI_NULLS ON */
+ 
+/* SET QUOTED_IDENTIFIER ON */
+ 
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE Report(
+	ReportID int AUTO_INCREMENT NOT NULL,
+	ReportContent Longtext NOT NULL,
+	Purpose Longtext NOT NULL,
+	UserReportId int NOT NULL,
+	Response Longtext NULL,
+ CONSTRAINT PK_Report PRIMARY KEY 
+(
+	ReportID ASC
+) 
+);
+/* SQLINES DEMO *** le [dbo].[Room]    Script Date: 11/14/2021 7:05:03 PM ******/
+/* SET ANSI_NULLS ON */
+ 
+/* SET QUOTED_IDENTIFIER ON */
+ 
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE Room(
+	RoomID int AUTO_INCREMENT NOT NULL,
+	Name Longtext NOT NULL,
+	Description Longtext NULL,
+	Picture Longtext NULL,
+	OwnerID int NOT NULL,
+	Status int NOT NULL,
+	Area int NOT NULL,
+	BedNumber int NOT NULL,
+	Price Decimal(15,4) NOT NULL,
+	Rating Double NOT NULL,
+	PlaceID int NULL,
+	TypeID int NULL,
+ CONSTRAINT PK_Room PRIMARY KEY 
+(
+	RoomID ASC
+) 
+);
+/* SQLINES DEMO *** le [dbo].[Type]    Script Date: 11/14/2021 7:05:03 PM ******/
+/* SET ANSI_NULLS ON */
+ 
+/* SET QUOTED_IDENTIFIER ON */
+ 
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE Type(
+	TypeID int AUTO_INCREMENT NOT NULL,
+	Type Longtext NULL,
+	img nvarchar(50) NULL,
+ CONSTRAINT PK_Type PRIMARY KEY 
+(
+	TypeID ASC
+) 
+);
+
+
+INSERT Account (userId, UserName, PassWord, Email, FName, LName, Phone, isAdmin, isBooker, isOwner, Picture, Block) VALUES (1, N'at', N'ssrafB8yvH', N'anthytnnd@gmail.com', N'at', N'Nguyen', N'090856721', 1, 0, 0, N'undraw_profile.svg', 0);
+INSERT Account (userId, UserName, PassWord, Email, FName, LName, Phone, isAdmin, isBooker, isOwner, Picture, Block) VALUES (2, N'to_an', N'123', N'anhtuan161162@gmail.com', N'An', N'To', N'234567', 0, 0, 1, N'undraw_profile.svg', 1);
+
+
+
+INSERT Booking (BookingID, IDCustomer, IDOwner, CheckIn, CheckOut, TotalPrice, RoomID, Status)VALUES (1, 2, 1, CAST(N'2021-03-02' AS Date), CAST(N'2021-03-04' AS Date), 120000, 5, N'finish');
+INSERT Booking (BookingID, IDCustomer, IDOwner, CheckIn, CheckOut, TotalPrice, RoomID, Status) VALUES (2, 2, 1, CAST(N'2021-08-20' AS Date), CAST(N'2021-08-29' AS Date), 451787, 7, N'accepted');
+INSERT Booking (BookingID, IDCustomer, IDOwner, CheckIn, CheckOut, TotalPrice, RoomID, Status) VALUES (3, 2, 1, CAST(N'2021-04-12' AS Date), CAST(N'2021-04-15' AS Date), 765456, 6, N'processing');
+
+
+INSERT Comment (commentID, roomID, userId, content, rating, status) VALUES (1, 5, 1, N'Phong rat dep va sang trong', 5, 1);
+INSERT Comment (commentID, roomID, userId, content, rating, status) VALUES (2, 5, 2, N'Khong gian tuyet voi, dich vu tot', 4, 1);
+INSERT Comment (commentID, roomID, userId, content, rating, status) VALUES (3, 6, 2, N'Phong rat tot', 4, 1);
+
+INSERT Mail (id, name, Efrom, password, subject, content) VALUES (1, N'Block', N'thutuoitd@gmail.com', N'Thuyeannguyen162', N'Block', N'Your account is blocked
+');
+INSERT Mail (id, name, Efrom, password, subject, content) VALUES (2, N'Unblock', N'thutuoitd@gmail.com', N'Thuyeannguyen162', N'Unblock', N'Your account is unblocked');
+INSERT Mail (id, name, Efrom, password, subject, content) VALUES (3, N'Reset Password', N'thutuoitd@gmail.com', N'Thuyeannguyen162', N'Reset Password', N'Your new password is: ');
+
+
+INSERT Place (PlaceID, Place, img) SELECT (1, N'Đà Lạt', N'da_lat.jpg');
+INSERT Place (PlaceID, Place, img) VALUES (2, N'Mộc Châu', N'moc_chau.jpg');
+INSERT Place (PlaceID, Place, img) VALUES (3, N'Sapa', N'Sapa.jpg');
+INSERT Place (PlaceID, Place, img) VALUES (4, N'Vũng Tàu', N'vung_tau.jpg');
+INSERT Place (PlaceID, Place, img) VALUES (5, N'Ninh Bình', N'ninh_binh.jpg');
+INSERT Place (PlaceID, Place, img) VALUES (6, N'Cat Ba', N'cat_ba.jpg');
+INSERT Place (PlaceID, Place, img) VALUES (7, N'Đà Nẵng', N'da_nang.jpg');
+
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (5, N'Homestay Đà Lạt', NULL, N'homestay_da_lat.jpg', 1, 1, 12, 2, 123456.0000, 4.5, 1, 2);
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (6, N'Căn hộ Hà Nội', NULL, N'can_ho_cho_thue.jpg', 1, 1, 42, 2, 1000000.0000, 23, 7, 1);
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (7, N'Homestay Sapa', NULL, N'homestay_cho_thue.jpg', 0, 1, 12, 2, 123456.0000, 4.5, 3, 2);
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (10, N'Hotel Hoa Lư', N'', N'khach_san_4sao.jpg', 1, 0, 30, 1, 500000.0000, 15, 5, 3);
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (11, N'Hotel Trang An', NULL, N'hotel5sao.jpg', 1, 0, 45, 1, 1000000.0000, 65, 5, 3);
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (13, N'Nhà Sàn Hồng Việt', NULL, N'nha_san_hong_viet.jpg', 1, 1, 32, 3, 800000.0000, 34, 2, 4);
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (14, N'Homestay giá rẻ', NULL, N'homestaygiare.jfif', 1, 1, 12, 2, 600000.0000, 2.4, 1, 2);
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (15, N'Homestay Cui', NULL, N'Khong-khi-tai-Cui-homestay-o-Da-Lat.jpg', 1, 1, 24, 3, 1000000.0000, 3.4, 1, 2);
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (16, N'Homestay Saving', NULL, N'hometay-dalat-savingbooking.jpg', 1, 1, 20, 1, 700000.0000, 4.5, 1, 2);
+INSERT Room (RoomID, Name, Description, Picture, OwnerID, Status, Area, BedNumber, Price, Rating, PlaceID, TypeID) VALUES (17, N'Phòng trọ', NULL, N'phong tro.jpg', 1, 0, 35, 1, 200000.0000, 3.2, 1, 1);
+
+INSERT Type (TypeID, Type, img) VALUES (1, N'Căn hộ', N'can_ho.jpg');
+INSERT Type (TypeID, Type, img) VALUES (2, N'Homestay', N'homestay.jpg');
+INSERT Type (TypeID, Type, img) VALUES (3, N'Hotel', N'hotel.jpg');
+INSERT Type (TypeID, Type, img) VALUES (4, N'Nhà sàn', N'nha_san.jpg');
+INSERT Type (TypeID, Type, img) VALUES (5, N'Resort', N'resort.jpg');
+INSERT Type (TypeID, Type, img) VALUES (6, N'Biệt Thự', N'biet_thu.jpg');
+
+ALTER TABLE Room  ADD FOREIGN KEY(PlaceID)
+REFERENCES Place (PlaceID);
+ 
+ALTER TABLE Room  ADD FOREIGN KEY(TypeID)
+REFERENCES Type (TypeID);
+ 
+ 
