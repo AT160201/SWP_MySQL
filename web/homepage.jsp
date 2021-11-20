@@ -177,7 +177,7 @@
                                         <div class="row h-100">
                                             <c:forEach items="${requestScope.rooms1}" var="r">
                                                 <div class="col-md-4 mb-3 mb-md-0">
-                                                    <div class="card h-100 text-white hover-top"><img class="img-fluid h-100" src="rhea/public/assets/img/gallery/${r.picture}" alt="" />
+                                                    <div class="card h-100 text-white hover-top"><a href="detail?id=${r.rid}"><img class="img-fluid h-100" src="rhea/public/assets/img/gallery/${r.picture}" alt="" /></a>
                                                         <div class="card-img-overlay ps-0 d-flex flex-column justify-content-between bg-dark-gradient">
                                                             <div class="pt-3"><span class="badge bg-primary"><fmt:formatNumber type = "number" 
                                                                               maxFractionDigits = "3" value = "${r.price}" />VND</span></div>
