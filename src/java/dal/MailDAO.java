@@ -6,7 +6,6 @@
 package dal;
 
 import com.mysql.jdbc.Connection;
-import static dal.DataConnection.getConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +18,6 @@ import model.Mail;
  * @author ADMIN
  */
 public class MailDAO extends DataConnection{
-    private Connection connection= getConnection();
     public List<Mail> getAllMail(){
         List<Mail> list= new ArrayList<>();
         String sql= "Select * from Mail";
@@ -29,7 +27,7 @@ public class MailDAO extends DataConnection{
             while(rs.next()){
                 list.add(new Mail(rs.getInt("id"), 
                         rs.getString("name"),
-                        rs.getString("Efrom"),
+                        rs.getString("from"),
                         rs.getString("password"),
                         rs.getString("subject"),
                         rs.getString("content")));
@@ -48,7 +46,7 @@ public class MailDAO extends DataConnection{
             while(rs.next()){
                 return new Mail(rs.getInt("id"), 
                         rs.getString("name"),
-                        rs.getString("Efrom"),
+                        rs.getString("from"),
                         rs.getString("password"),
                         rs.getString("subject"),
                         rs.getString("content"));
@@ -79,6 +77,6 @@ public class MailDAO extends DataConnection{
     }
     public static void main(String[] args){
         Mail e= new Mail(1,"Block","thutuoitd@gmail.com","Thuyeannguyen","NO","fghj");
-        System.out.println( new MailDAO().getMailById(1).getName());
+        System.out.println( new MailDAO().isValidEmail("thutuoitd@gmail.com"));
     }
 }

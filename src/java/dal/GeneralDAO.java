@@ -6,7 +6,6 @@
 package dal;
 
 import com.mysql.jdbc.Connection;
-import static dal.DataConnection.getConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,9 +20,6 @@ import model.Type;
  * @author ADMIN
  */
 public class GeneralDAO extends DataConnection {
-
-    private Connection connection = getConnection();
-
     public ArrayList<Place> getTop6Place() {
         ArrayList<Place> list = new ArrayList<>();
         String sql = "select p.PlaceID, p.Place, p.img, COUNT(RoomID) as count from Place as p inner join Room \n"
@@ -270,7 +266,6 @@ public class GeneralDAO extends DataConnection {
 
     public static void main(String[] args) {
         GeneralDAO db = new GeneralDAO();
-        int[] arr = db.numberOfBed();
-        System.out.println(arr[1]);
+        System.out.println(db.getTop6Type().get(0).getType());
     }
 }

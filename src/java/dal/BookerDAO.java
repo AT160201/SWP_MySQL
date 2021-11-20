@@ -6,8 +6,6 @@
 package dal;
 
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
-import static dal.DataConnection.getConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,11 +19,9 @@ import model.Room;
  * @author ADMIN
  */
 public class BookerDAO extends DataConnection {
-
     public List<Booking> getAllBooking(int uid, String search,String status, String orderBy){
-        Connection connection= getConnection();
         List<Booking> list= new ArrayList<>();
-        String sql= "select * from Booking join Room on Booking.RoomID= Room.RoomID where IDCustomer= "+uid;
+        String sql= "select * from Booking join Room on Booking.RoomID= Room.RoomID where IDCustomer=?";
         if(search !=null){
             sql += " and room.Name like N'%"+search+"%'";
         }
@@ -36,8 +32,9 @@ public class BookerDAO extends DataConnection {
             sql += " order by "+orderBy;
         }
         try{
-            Statement st= (Statement)connection.createStatement();
-            ResultSet rs= st.executeQuery(sql);
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setInt(1, uid);
+            ResultSet rs= st.executeQuery();
             while(rs.next()){
                 Room room= new Room(rs.getInt("RoomID"), rs.getString("Name"), rs.getString("Description"),
                 rs.getString("Picture"), rs.getInt("OwnerID"), rs.getBoolean("Status"), rs.getInt("Area"), 
